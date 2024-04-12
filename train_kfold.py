@@ -256,7 +256,7 @@ class Config:
     pretrain_model_path = checkpoint_name
     hidden_size = 768
     learning_rate = 5e-5
-    epoch = 1
+    epoch = 5
     class_num = 3
     train_file = './data/'
     train_file = train_filename
