@@ -156,7 +156,8 @@ from transformers import AutoTokenizer
 import torch
 
 is_english = False
-checkpoint_name = 'microsoft/deberta-v3-base'
+checkpoint_name = 'google-bert/bert-base-uncased'
+# checkpoint_name = 'microsoft/deberta-v3-base'
 tokenizer = AutoTokenizer.from_pretrained(checkpoint_name)
 class NLPCCTaskDataSet(Dataset):
     def __init__(self, filepath='', is_train=True, mini_test=True, is_test=False):
@@ -355,7 +356,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 name = 'like'
 dataset = NLPCCTaskDataSet(filepath=config.train_file, mini_test=False)
-train_data_loader = DataLoader(dataset, batch_size=8, collate_fn=partial(collate_fn_nlpcc, name=name), shuffle=True)
+train_data_loader = DataLoader(dataset, batch_size=16, collate_fn=partial(collate_fn_nlpcc, name=name), shuffle=True)
 dev_dataset = NLPCCTaskDataSet(filepath=config.dev_file, mini_test=False, is_test=False)
 dev_data_loader = DataLoader(dev_dataset, batch_size=4, collate_fn=partial(collate_fn_nlpcc, name=name), shuffle=False)
 
