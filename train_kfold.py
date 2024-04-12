@@ -10,8 +10,8 @@ parser.add_argument("--fold", default="", type=str, help="")
 
 args = parser.parse_args()
 
-train_filename = 'train_fold_'+str(args.fold)
-dev_filename = 'dev_fold_'+str(args.fold)
+train_filename ='/kaggle/working/'+'train_fold_'+str(args.fold)
+dev_filename = '/kaggle/working/'+'dev_fold_'+str(args.fold)
 model_dir = '/kaggle/working/models/'
 
 class MultiFocalLoss(nn.Module):

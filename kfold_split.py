@@ -4,25 +4,8 @@ import json
 error_cnt =0
 from collections import Counter
 labels = []
-dataset = []
-with open('英文重要性标注-1k.txt','r',encoding='utf-8') as lines:
-    for line in lines:
-        data = json.loads(line.strip())
-        extra_info = data['extra']['英文标题']
-        zh_title = data['extra']['中文标题']
-        if '英文内容' not in data['extra']:
-            #print(data)
-            # error_cnt+=1
-            continue
-        extra_content = data['extra']['英文内容']
-        zh_content = data['extra']['中文内容']
-        if 'content' in data and data['content']:
-            # print(data['content'])
-            qa_pairs = json.loads(data['content'])[0]['qa_pairs'][0]['blocks'][0]['text']
-            label = int(qa_pairs.replace('重要性','').replace('分',''))
-            json_data = {'title':extra_info,'content':extra_content.replace('\u3000','').replace('\u2002',''),'label':label,'zh_title':zh_title,'zh_content':zh_content}
-            labels.append(label)
-            dataset.append(json_data)
+dataset = [json.loads(line.strip()) for line in open('all_data.jsonl','r',encoding='utf-8').readlines()]
+
             # print(json.dumps(json_data,ensure_ascii=False))
             # writer.write(json.dumps(json_data,ensure_ascii=False)+'\n')
 import random
@@ -49,11 +32,11 @@ for idx,fold in enumerate(folds):
         train_data.append(dataset[index])
     for index in dev_indices:
         dev_data.append(dataset[index])
-    train_writer = open('d:/kfold_en_data/train_fold_'+str(idx),'a+',encoding='utf-8')
+    train_writer = open('/kaggle/working/train_fold_'+str(idx),'a+',encoding='utf-8')
     for d in train_data:
         train_writer.write(json.dumps(d,ensure_ascii=False)+'\n')
     train_writer.close()
-    dev_writer  =open('d:/kfold_en_data/dev_fold_'+str(idx),'a+',encoding='utf-8')
+    dev_writer  =open('/kaggle/working/dev_fold_'+str(idx),'a+',encoding='utf-8')
     for d in dev_data:
         dev_writer.write(json.dumps(d,ensure_ascii=False)+'\n')
     dev_writer.close()
