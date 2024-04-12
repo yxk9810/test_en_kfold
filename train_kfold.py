@@ -401,7 +401,7 @@ from sklearn.metrics import classification_report
 
 print(classification_report(golds, [int(p) for p in pred_like]))
 print(len(golds))
-writer = open('test_en_pred_fold+'+args.fold+'.jsonl', 'a+', encoding='utf-8')
+writer = open('test_en_pred_fold_'+args.fold+'.jsonl', 'a+', encoding='utf-8')
 label_map = {0: 'NEG', 1: 'POS', 2: 'NEU'}
 desc2label = {'NEG': 0, 'POS': 1, 'NEU': 2}
 right = 0
@@ -416,6 +416,6 @@ for pred, t in zip(pred_like, test_dataset.dataset):
     if int(t['pred']) == int(t['label']):
         right += 1
     #     train_data.append(t)
-    writer.write(json.dumps(t, ensure_ascii=False) + '\n')
+    if t['pred']!=t['label']:writer.write(json.dumps(t, ensure_ascii=False) + '\n')
 writer.close()
 print(float(right) / total)
