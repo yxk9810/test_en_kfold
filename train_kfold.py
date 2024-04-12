@@ -378,7 +378,12 @@ for epoch in range(config.epoch):
     print('train loss {}'.format(train_loss))
     print('val loss {} val acc {}'.format(dev_loss, dev_f1))
 
-
+del model 
+import gc 
+gc.collect()
+torch.cuda.empty_cache()
+model = BertClassifier(config)
+model.to(device)
 model.load_state_dict(torch.load(model_dir+'model_weights.pth'))
 
 # %% [code] {"jupyter":{"outputs_hidden":false},"id":"bXs7vqLKRbVU","execution":{"iopub.status.busy":"2024-04-12T03:46:07.042530Z","iopub.execute_input":"2024-04-12T03:46:07.042825Z","iopub.status.idle":"2024-04-12T03:46:07.056379Z","shell.execute_reply.started":"2024-04-12T03:46:07.042793Z","shell.execute_reply":"2024-04-12T03:46:07.055521Z"}}
